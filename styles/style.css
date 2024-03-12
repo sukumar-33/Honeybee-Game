@@ -1,0 +1,40 @@
+/* *{
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.game-container{
+    width: 400px;
+    min-height: 100vh;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+} */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box  ;
+  }
+  
+  .game-container {
+    width: 300px;
+    height: 100vh;
+    background-color: #87CEEB; /* Sky blue background */
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .honey , .virus{
+    position: absolute;
+  }
+
+  .score-heading , .timer-heading{
+    margin: 0;
+    background-color: blue;
+    color: rgb(0, 0, 0);
+  }
+  
