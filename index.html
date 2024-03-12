@@ -4,21 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Honeybee - Game</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/index.css">
 </head>
 <body>
-    <div class="game-container">
-        <label for="name">Enter Your Name : </label><br>
-        <input type="text" id="name">
-        <button onclick="startGame()">Start Game > </button>
-
+    <div class="container">
     </div>
-    <script>
-        function startGame() {
-            let name = document.getElementById("name").value;
-            localStorage.setItem("name", name);
-            window.location.href = "game.html";
-        }
-    </script>
+    <script src="script/index.js"></script>
 </body>
 </html>
