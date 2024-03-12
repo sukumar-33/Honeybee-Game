@@ -35,7 +35,15 @@ document.addEventListener("DOMContentLoaded", function () {
     function createHoney() {
         const honey = document.createElement("img");
         honey.className = "honey";
-        honey.src = "images/lovepik-honeybee-element-png-image_401004322_wh1200.png";
+        let honeyNumber = Math.floor(Math.random() * 3) + 1; 
+        if(honeyNumber == 1){
+            honey.src = "images/honey-1.png";
+        }else if(honeyNumber == 2){
+            honey.src = "images/honey-2.png";
+        }else{
+            honey.src = "images/honey-3.png";
+        }
+        
         gameContainer.appendChild(honey);
 
 
@@ -58,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         function dropHoney() {
-            honeyPositionVertical += Math.random() * 2 + 1;
+            honeyPositionVertical += Math.random() * 8 + 1;
             honey.style.top = honeyPositionVertical  + "px";
             if (honeyPositionVertical < window.innerHeight - honey.offsetHeight) {
                 requestAnimationFrame(dropHoney);
@@ -74,7 +82,16 @@ document.addEventListener("DOMContentLoaded", function () {
         
         const virus = document.createElement("img");
         virus.className = "virus";
-        virus.src = "images/virus_7691073.png";
+
+        let virusNumber = Math.floor(Math.random() * 3) + 1; 
+        if(virusNumber == 1){
+            virus.src = "images/virus-1.png";
+        }else if(virusNumber == 2){
+            virus.src = "images/virus-2.png";
+        }else{
+            virus.src = "images/virus-3.png";
+        }
+
         gameContainer.appendChild(virus);
 
         const virusSize = Math.floor(Math.random() * 80) + 10;
@@ -94,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         function dropVirus() {
-            virusPositionVertical += Math.random() * 2 + 1;
+            virusPositionVertical += Math.random() * 5 + 1;
             virus.style.top = virusPositionVertical  + "px";
             if (virusPositionVertical < window.innerHeight - virus.offsetHeight) {
                 requestAnimationFrame(dropVirus);
@@ -118,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 clearInterval(gameInterval);
                 clearInterval(timerInterval);
                 localStorage.setItem("score", score);
-                localStorage.setItem("result" , "LOOSER");
+                localStorage.setItem("result" , "LOST");
                 window.location.href = "score.html";
             }
             if (timeLeft <= 0) {
