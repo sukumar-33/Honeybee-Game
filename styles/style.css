@@ -34,7 +34,7 @@ body {
 }
 
 
-.score-heading , .timer-heading{
+.score-heading , .timer-heading , .honey-missed-heading{
   margin: 0;
   color: rgb(0, 0, 0);
   text-align: center;

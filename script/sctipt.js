@@ -5,8 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const virusAudio = new Audio();
     virusAudio.src = "audio/virus.mp3";
+
     let score = 0;
     let timeLeft = 120;
+    let honeyMissed = 0;
 
     const heading = document.createElement("h1");
     heading.className = "score-heading";
@@ -15,6 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const timerElement = document.createElement("h1");
     timerElement.className = "timer-heading";
     gameContainer.appendChild(timerElement);
+
+    const honeyMissedHeading = document.createElement("h1");
+    honeyMissedHeading.className = "honey-missed-heading";
+    gameContainer.appendChild(honeyMissedHeading);
 
     const startLine = document.createElement("div");
     startLine.className = "start-line";
@@ -32,7 +38,11 @@ document.addEventListener("DOMContentLoaded", function () {
         timerElement.textContent = "Time: " + timeLeft + "s";
     }
 
-    function createHoney() {
+    function updateHoneyMissed(){
+        honeyMissedHeading.textContent = "Honey's Missed: " + honeyMissed;
+    }
+
+    function createHoney(randomHoneySpeed) {
         const honey = document.createElement("img");
         honey.className = "honey";
         let honeyNumber = Math.floor(Math.random() * 3) + 1; 
@@ -52,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
         honey.style.height = honeySize + "px";
 
   
-        let honeyPositionVertical = 60;
+        let honeyPositionVertical = 90;
         const containerWidth = gameContainer.offsetWidth;
         const startPositionHoney = Math.random() * (containerWidth - honeySize);
         honey.style.left = startPositionHoney + "px"; 
@@ -63,10 +73,12 @@ document.addEventListener("DOMContentLoaded", function () {
             honeyAudio.play();
             honey.remove();
             score += 100;
+            honeyMissed--;
         });
 
         function dropHoney() {
-            honeyPositionVertical += Math.random() * 8 + 1;
+            honeyPositionVertical += randomHoneySpeed;
+            // honeyPositionVertical += Math.random() * 4 + 1;
             honey.style.top = honeyPositionVertical  + "px";
             if (honeyPositionVertical < window.innerHeight - honey.offsetHeight) {
                 requestAnimationFrame(dropHoney);
@@ -77,8 +89,8 @@ document.addEventListener("DOMContentLoaded", function () {
         dropHoney(); 
         
     }
-
-    function createVirus(){
+    
+    function createVirus(randomVirusSpeed){
         
         const virus = document.createElement("img");
         virus.className = "virus";
@@ -98,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
         virus.style.width = virusSize + "px";
         virus.style.height = virusSize + "px";
 
-        let virusPositionVertical = 60;
+        let virusPositionVertical = 90;
         const containerWidth = gameContainer.offsetWidth;
 
         const startPositionVirus = Math.random() * (containerWidth - virusSize);
@@ -111,26 +123,33 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         function dropVirus() {
-            virusPositionVertical += Math.random() * 5 + 1;
+            
+            // virusPositionVertical += Math.floor(Math.random() * 16) + 1;
+            virusPositionVertical += randomVirusSpeed;
             virus.style.top = virusPositionVertical  + "px";
             if (virusPositionVertical < window.innerHeight - virus.offsetHeight) {
                 requestAnimationFrame(dropVirus);
             } else {
                 virus.remove();
             }
+            
         }
         dropVirus();
     }
-    function startGame(){
+    function startGame(speedLevel){
         const gameInterval = setInterval(function(){
-            createHoney();
-            createVirus();
+            let randomHoneySpeed = Math.floor(Math.random() * speedLevel) + 1;
+            createHoney(randomHoneySpeed);
+            honeyMissed++;
+            let randomVirusSpeed =  Math.floor(Math.random() * speedLevel) + 1;
+            createVirus(randomVirusSpeed);
         } , 2000);
 
         const timerInterval = setInterval(function () {
             timeLeft--;
             updateTimer();
             updateScore();
+            updateHoneyMissed();
             if(score < 0){
                 clearInterval(gameInterval);
                 clearInterval(timerInterval);
@@ -147,7 +166,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           }, 1000); 
     }
-    startGame();   
+    let speedLevel;
+    if(localStorage.getItem("level") == "Easy"){
+        speedLevel = 4;
+    }else if(localStorage.getItem("level") == "Mediums"){
+        speedLevel = 8;
+    }else{
+        speedLevel = 16;
+    }
+
+    startGame(speedLevel);   
     
     
   });
